@@ -1,0 +1,119 @@
+<html ng-app='myApp'>
+
+<head>
+    <style>
+        body {
+            background-color: #b2ebf2;
+        }
+
+        table {
+            text-align: center;
+        }
+
+        .arrow-down:after,
+        .arrow-up:after {
+            content: ' ';
+            position: relative;
+            left: 2px;
+            border: 8px solid transparent;
+        }
+
+        .arrow-down:after {
+            top: 10px;
+            border-top-color: black;
+        }
+
+        .arrow-up:after {
+            bottom: 15px;
+            border-bottom-color: black;
+        }
+
+        arrow-down,
+        .arrow-up {
+            padding-right: 10px;
+        }
+    </style>
+    <title>Sorting</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js" type='text/javascript'></script>
+    <link rel="icon" href="img/Aicon.ico">
+</head>
+
+<body ng-controller="myController">
+    <div>
+        <center>
+            <h1>Table Sorting</H1>
+        </CENTER>
+    </DIV>
+    <table cellspacing="0" border="1" align="center" width=50%>
+        <tr>
+            <th ng-click='sortColumn("sno")' ng-class='sortClass("sno")' style="background-color:#00bcd4;">
+                <font color="white">S.no
+            </th>
+            <th ng-click='sortColumn("name")' ng-class='sortClass("name")' style="background-color:#00bcd4;">
+                <font color="white">Name
+            </th>
+            <th ng-click='sortColumn("year")' ng-class='sortClass("year")' style="background-color:#00bcd4;">
+                <font color="white">Year
+            </th>
+            <th ng-click='sortColumn("exp")' ng-class='sortClass("exp")' style="background-color:#00bcd4;">
+                <font color="white">Experience
+            </th>
+        </tr>
+        <tr ng-repeat='data in datas|orderBy:column:reverse'>
+            <td align="center">{{data.sno}}</td>
+            <td align="center">{{data.name}}</td>
+            <td align="center">{{data.year}}</td>
+            <td align="center">{{data.exp}}</td>
+        </tr>
+    </table>
+    <script>
+        var app = angular.module('myApp', []);
+        // Controller
+        app.controller('myController', function ($scope) {
+            // Object
+            $scope.datas = [
+                { sno: 1, name: 'Amazon', year: 1994, exp: 26 },
+                { sno: 2, name: 'Microsoft', year: 1975, exp: 45 },
+                { sno: 3, name: 'Paypal', year: 1998, exp: 22 },
+                { sno: 4, name: 'Zoho', year: 1996, exp: 24 }
+            ];
+            // column to sort
+            $scope.column = 'sno';
+            // sort ordering (Ascending or Descending). Set true for desending
+            $scope.reverse = false;
+            // called on header click
+            $scope.sortColumn = function (col) {
+                $scope.column = col;
+                if ($scope.reverse) {
+                    $scope.reverse = false;
+                    $scope.reverseclass = 'arrow-up';
+                } else {
+                    $scope.reverse = true;
+                    $scope.reverseclass = 'arrow-down';
+                }
+            };
+            // remove and change class
+            $scope.sortClass = function (col) {
+                if ($scope.column == col) {
+                    if ($scope.reverse) {
+                        return 'arrow-down';
+                    } else {
+                        return 'arrow-up';
+                    }
+                } else {
+                    return '';
+                }
+            }
+        });
+    </script>
+    <div style="position:absolute; bottom:0; width: 99%;">
+        <div style="background-color: #b2ebf2;">
+            <hr>
+            <div style="background-color: white; padding: 8px;">
+                <center>Savn © 2020 All rights reserved</center>
+            </div>
+            <hr>
+        </div>
+    </div>
+</body>
+</html>
